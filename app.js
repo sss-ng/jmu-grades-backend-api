@@ -37,10 +37,10 @@ app.get("/data/:count", (req, res) => {
         });
 });
 
-app.get("/data/:class", (req, res) => {
+app.get("/data/class/:class", (req, res) => {
     const className = req.params.class;
     const queryString = {
-        text: "SELECT * FROM grades WHERE class ilike $1 ",
+        text: "SELECT * FROM grades WHERE class ilike $1::text ",
         values: [className],
     };
     pool.query(queryString)
