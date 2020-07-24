@@ -37,6 +37,22 @@ app.get("/data/:count", (req, res) => {
         });
 });
 
+app.get("/data/:class", (req, res) => {
+    const className = req.params.class;
+    const queryString = {
+        text: "SELECT * FROM grades WHERE class ilike $1 ",
+        values: [className],
+    };
+    pool.query(queryString)
+        .then((response) => {
+            res.json(response.rows);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.json({ success: false, message: "there was an error" });
+        });
+});
+
 // run the server
 const port = 8000;
 app.listen(port, () => {
